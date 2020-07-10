@@ -2,13 +2,13 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const browserSync = require('browser-sync').create();
 
-// Serving static content from
+// NAME OF THE THEME
 const source = 'public_html';
 const dest = source,
     css = {
         in: source + '/scss/style.scss',
         watch: [source + '/scss/**/*'],
-        out: dest,
+        out: dest, //?
         sassOpts: {
             outputStyle: 'nested',
             imagePath: '../images',
@@ -29,18 +29,19 @@ const sassFunc =
 const bspFunc =
     function bspFunc() {
         browserSync.init({
-            port: 3020,
             server: {
-                baseDir: source + '/'
+                baseDir: source
             },
+            port: 3020,
             ui: {
                 port: 4040
             }
         });
-        gulp.watch(source + '*/**/*').on('change', browserSync.reload);
-        gulp.watch(source + '**/*.html').on('change', browserSync.reload);
-        gulp.watch(source + 'scss/*.scss', sassFunc).on('change', browserSync.reload);
-        // gulp.watch(source + 'js/*.js').on('change', browserSync.reload);
+        // gulp.watch(source + '/style.css').on('change', browserSync.reload);
+        gulp.watch(source + '/**/*.html').on('change', browserSync.reload);
+        gulp.watch(source + '/scss/*.scss', sassFunc).on('change', browserSync.reload);
+        gulp.watch(source + '/js/*.js').on('change', browserSync.reload);
+        // gulp.watch(source + '**/*').on('change', browserSync.reload);
     };
 
 
@@ -48,7 +49,7 @@ gulp.task('default', gulp.parallel(
     gulp.series(bspFunc),
 ));
 
-console.log(source + '/**/*.html') //?
+console.log(source + '/**/*.html')
 
 exports.sassFunc = sassFunc;
 exports.bspFunc = bspFunc;
